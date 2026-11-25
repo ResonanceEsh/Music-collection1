@@ -80,12 +80,13 @@ namespace MusicCollection
 
         static void ShowSizeTable()
         {
-            double start = 1.5;
-            double finish = 7.0;
-            double step = 0.5;
-
             Console.WriteLine("Розмір MP3-файлу залежно від тривалості треку");
             Console.WriteLine();
+            TabulateFileSize(1.5, 7.0, 0.5);
+        }
+
+        static void TabulateFileSize(double start, double finish, double step)
+        {
             Console.WriteLine("{0,10}{1,14}{2,14}", "Хвилин", "128 кбіт/с", "320 кбіт/с");
             Console.WriteLine(new string('-', 38));
 
