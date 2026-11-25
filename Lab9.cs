@@ -109,6 +109,7 @@ namespace MusicCollection
 
             Console.WriteLine(new string('-', 95));
             Console.WriteLine("Записів: " + count + " із " + Capacity + ".");
+            Console.WriteLine("Загальна тривалість колекції: " + FormatTotalTime(CalculateTotalDuration(durations, count)) + ".");
         }
 
         static string FormatTime(int seconds)
@@ -162,6 +163,27 @@ namespace MusicCollection
 
                 Console.WriteLine("Помилка: текст має містити від " + minLength + " до " + maxLength + " символів.");
             }
+        }
+
+        static int CalculateTotalDuration(int[] values, int itemCount)
+        {
+            int total = 0;
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                total += values[i];
+            }
+
+            return total;
+        }
+
+        static string FormatTotalTime(int totalSeconds)
+        {
+            int hours = totalSeconds / 3600;
+            int minutes = totalSeconds % 3600 / 60;
+            int seconds = totalSeconds % 60;
+
+            return hours + " год " + minutes + " хв " + seconds + " с";
         }
 
         static void ShowAbout()
