@@ -105,8 +105,24 @@ namespace MusicCollection
             Console.WriteLine("Прослуховування за жанрами й днями тижня");
             Console.WriteLine();
 
-            int rows = genres.Length;
-            int cols = days.Length;
+            int rows;
+            int cols;
+
+            Console.Write("Скільки жанрів показати (1–" + genres.Length + "): ");
+            if (!int.TryParse(Console.ReadLine(), out rows) || rows <= 0 || rows > genres.Length)
+            {
+                Console.WriteLine("Помилка: потрібне ціле число від 1 до " + genres.Length + ".");
+                return;
+            }
+
+            Console.Write("Скільки днів показати (1–" + days.Length + "): ");
+            if (!int.TryParse(Console.ReadLine(), out cols) || cols <= 0 || cols > days.Length)
+            {
+                Console.WriteLine("Помилка: потрібне ціле число від 1 до " + days.Length + ".");
+                return;
+            }
+
+            Console.WriteLine();
 
             Console.Write("{0,-12}", "Жанр");
             for (int col = 0; col < cols; col++)
@@ -118,6 +134,9 @@ namespace MusicCollection
             int lineWidth = 12 + 8 * cols + 10;
             Console.WriteLine(new string('-', lineWidth));
 
+            int[] colSums = new int[cols];
+            int grandTotal = 0;
+
             for (int row = 0; row < rows; row++)
             {
                 int rowSum = 0;
@@ -128,10 +147,21 @@ namespace MusicCollection
                     int value = (row * 7 + col * 3 + 5) % 19 + 3;
                     Console.Write("{0,8}", value);
                     rowSum += value;
+                    colSums[col] += value;
                 }
 
                 Console.WriteLine("{0,10}", rowSum);
+                grandTotal += rowSum;
             }
+
+            Console.WriteLine(new string('-', lineWidth));
+
+            Console.Write("{0,-12}", "Разом");
+            for (int col = 0; col < cols; col++)
+            {
+                Console.Write("{0,8}", colSums[col]);
+            }
+            Console.WriteLine("{0,10}", grandTotal);
         }
     }
 }
