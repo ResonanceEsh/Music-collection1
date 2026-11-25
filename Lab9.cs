@@ -31,8 +31,8 @@ namespace MusicCollection
 
                 switch (choice)
                 {
+                    case "1": ShowAllTracks(); Pause(); break;
                     case "2": AddTrack(); Pause(); break;
-                    case "1":
                     case "3":
                     case "4":
                     case "5":
@@ -89,6 +89,31 @@ namespace MusicCollection
             Console.WriteLine("\nНатисніть будь-яку клавішу...");
             Console.ReadKey(true);
             Console.Clear();
+        }
+
+        static void ShowAllTracks()
+        {
+            if (count == 0)
+            {
+                Console.WriteLine("Записів поки немає.");
+                return;
+            }
+
+            Console.WriteLine("{0,4} {1,-18}{2,-22}{3,-18}{4,6}{5,9}{6,6}{7,11}", "№", "Виконавець", "Назва", "Альбом", "Рік", "Тривал.", "Жанр", "Прослух.");
+            Console.WriteLine(new string('-', 95));
+
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine("{0,4} {1,-18}{2,-22}{3,-18}{4,6}{5,9}{6,6}{7,11}", ids[i], artists[i], titles[i], albums[i], years[i], FormatTime(durations[i]), genreIds[i], plays[i]);
+            }
+
+            Console.WriteLine(new string('-', 95));
+            Console.WriteLine("Записів: " + count + " із " + Capacity + ".");
+        }
+
+        static string FormatTime(int seconds)
+        {
+            return (seconds / 60) + ":" + (seconds % 60).ToString("D2");
         }
 
         static void AddTrack()
