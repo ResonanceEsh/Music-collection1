@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace MusicCollection
@@ -73,6 +73,11 @@ namespace MusicCollection
             Console.WriteLine("та топ-5 треків за прослуховуваннями.");
         }
 
+        static double CalculateFileSize(double minutes, double kbps)
+        {
+            return minutes * 60 * kbps / 8 / 1024;
+        }
+
         static void ShowSizeTable()
         {
             double start = 1.5;
@@ -86,8 +91,8 @@ namespace MusicCollection
 
             for (double minutes = start; minutes <= finish + 1e-9; minutes += step)
             {
-                double mb128 = minutes * 60 * 128 / 8 / 1024;
-                double mb320 = minutes * 60 * 320 / 8 / 1024;
+                double mb128 = CalculateFileSize(minutes, 128);
+                double mb320 = CalculateFileSize(minutes, 320);
                 Console.WriteLine("{0,10:F1}{1,14:F2}{2,14:F2}", minutes, mb128, mb320);
             }
         }
