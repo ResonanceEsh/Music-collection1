@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace MusicCollection
@@ -31,8 +31,8 @@ namespace MusicCollection
 
                 switch (choice)
                 {
+                    case "2": AddTrack(); Pause(); break;
                     case "1":
-                    case "2":
                     case "3":
                     case "4":
                     case "5":
@@ -89,6 +89,54 @@ namespace MusicCollection
             Console.WriteLine("\nНатисніть будь-яку клавішу...");
             Console.ReadKey(true);
             Console.Clear();
+        }
+
+        static void AddTrack()
+        {
+            if (count == Capacity)
+            {
+                Console.WriteLine("Сховище заповнене, видаліть щось зайве.");
+                return;
+            }
+
+            string artist = ReadText("Виконавець (2–17 символів): ", 2, 17);
+            string title = ReadText("Назва (2–21 символ): ", 2, 21);
+            string album = ReadText("Альбом (2–17 символів): ", 2, 17);
+            int year = ReadInt("Рік випуску (1900–" + DateTime.Now.Year + "): ", 1900, DateTime.Now.Year);
+            int duration = ReadInt("Тривалість, секунд (1–7200): ", 1, 7200);
+            int genreId = ReadInt("Код жанру (1–" + GetGenres().Length + "): ", 1, GetGenres().Length);
+            int playCount = ReadInt("Кількість прослуховувань (0–100000000): ", 0, 100000000);
+
+            ids[count] = nextId;
+            artists[count] = artist;
+            titles[count] = title;
+            albums[count] = album;
+            years[count] = year;
+            durations[count] = duration;
+            genreIds[count] = genreId;
+            plays[count] = playCount;
+            count++;
+            nextId++;
+
+            Console.WriteLine("Додано трек №" + ids[count - 1] + ".");
+        }
+
+        static string ReadText(string prompt, int minLength, int maxLength)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string text = Console.ReadLine();
+                if (text == null) text = "";
+                text = text.Trim();
+
+                if (text.Length >= minLength && text.Length <= maxLength)
+                {
+                    return text;
+                }
+
+                Console.WriteLine("Помилка: текст має містити від " + minLength + " до " + maxLength + " символів.");
+            }
         }
 
         static void ShowAbout()
