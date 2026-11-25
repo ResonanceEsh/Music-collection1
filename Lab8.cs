@@ -82,7 +82,13 @@ namespace MusicCollection
         {
             Console.WriteLine("Розмір MP3-файлу залежно від тривалості треку");
             Console.WriteLine();
-            TabulateFileSize(1.5, 7.0, 0.5);
+
+            double start = ReadDouble("Початок проміжку, хв (0,5–30): ", 0.5, 30);
+            double finish = ReadDouble("Кінець проміжку, хв (не менше за початок, до 60): ", start, 60);
+            double step = ReadDouble("Крок, хв (0,1–5): ", 0.1, 5);
+
+            Console.WriteLine();
+            TabulateFileSize(start, finish, step);
         }
 
         static void TabulateFileSize(double start, double finish, double step)
@@ -94,7 +100,55 @@ namespace MusicCollection
             {
                 double mb128 = CalculateFileSize(minutes, 128);
                 double mb320 = CalculateFileSize(minutes, 320);
-                Console.WriteLine("{0,10:F1}{1,14:F2}{2,14:F2}", minutes, mb128, mb320);
+                Console.WriteLine("{0,10:F2}{1,14:F2}{2,14:F2}", minutes, mb128, mb320);
+            }
+        }
+
+        static double ReadDouble(string prompt, double min, double max)
+        {
+            double value;
+
+            while (true)
+            {
+                Console.Write(prompt);
+                string text = Console.ReadLine();
+
+                if (!double.TryParse(text, out value))
+                {
+                    Console.WriteLine("Помилка: введіть число.");
+                }
+                else if (!(value >= min && value <= max))
+                {
+                    Console.WriteLine("Помилка: число має бути від " + min + " до " + max + ".");
+                }
+                else
+                {
+                    return value;
+                }
+            }
+        }
+
+        static int ReadInt(string prompt, int min, int max)
+        {
+            int value;
+
+            while (true)
+            {
+                Console.Write(prompt);
+                string text = Console.ReadLine();
+
+                if (!int.TryParse(text, out value))
+                {
+                    Console.WriteLine("Помилка: введіть ціле число.");
+                }
+                else if (value < min || value > max)
+                {
+                    Console.WriteLine("Помилка: число має бути від " + min + " до " + max + ".");
+                }
+                else
+                {
+                    return value;
+                }
             }
         }
 
