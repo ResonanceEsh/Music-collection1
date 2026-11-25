@@ -40,10 +40,10 @@ namespace MusicCollection
                     case "7":
                     case "8":
                     case "9":
-                    case "10":
                         ShowNotReady();
                         Pause();
                         break;
+                    case "10": FillTestData(); Pause(); break;
                     case "11": ShowAbout(); Pause(); break;
                     case "12": ShowSizeTable(); Pause(); break;
                     case "13": ShowListeningTable(); Pause(); break;
@@ -184,6 +184,41 @@ namespace MusicCollection
             int seconds = totalSeconds % 60;
 
             return hours + " год " + minutes + " хв " + seconds + " с";
+        }
+
+        static void FillTestData()
+        {
+            string[] testArtists = { "Queen", "Miles Davis", "Daft Punk", "Dua Lipa", "Eminem", "Mumford & Sons" };
+            string[] testTitles = { "We Will Rock You", "So What", "One More Time", "Levitating", "Lose Yourself", "Little Lion Man" };
+            string[] testAlbums = { "News of the World", "Kind of Blue", "Discovery", "Future Nostalgia", "8 Mile", "Sigh No More" };
+            int[] testYears = { 1977, 1959, 2001, 2020, 2002, 2009 };
+            int[] testDurations = { 122, 562, 320, 203, 326, 245 };
+            int[] testGenreIds = { 1, 3, 5, 2, 4, 6 };
+            int[] testPlays = { 15200, 8400, 21000, 19800, 17500, 9300 };
+
+            int needed = testArtists.Length;
+
+            if (count + needed > Capacity)
+            {
+                Console.WriteLine("Недостатньо місця для тестових даних.");
+                return;
+            }
+
+            for (int i = 0; i < needed; i++)
+            {
+                ids[count] = nextId;
+                artists[count] = testArtists[i];
+                titles[count] = testTitles[i];
+                albums[count] = testAlbums[i];
+                years[count] = testYears[i];
+                durations[count] = testDurations[i];
+                genreIds[count] = testGenreIds[i];
+                plays[count] = testPlays[i];
+                count++;
+                nextId++;
+            }
+
+            Console.WriteLine("Додано тестових записів: " + needed + ".");
         }
 
         static void ShowAbout()
