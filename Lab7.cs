@@ -34,7 +34,7 @@ namespace MusicCollection
                         Pause();
                         break;
                     case "3":
-                        Console.WriteLine("Поки не зроблено.");
+                        ShowListeningTable();
                         Pause();
                         break;
                     case "0":
@@ -94,6 +94,43 @@ namespace MusicCollection
                 double mb128 = minutes * 60 * 128 / 8 / 1024;
                 double mb320 = minutes * 60 * 320 / 8 / 1024;
                 Console.WriteLine("{0,10:F1}{1,14:F2}{2,14:F2}", minutes, mb128, mb320);
+            }
+        }
+
+        static void ShowListeningTable()
+        {
+            string[] genres = { "Рок", "Поп", "Джаз", "Класика", "Хіп-хоп", "Електроніка", "Фольк", "Блюз" };
+            string[] days = { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд" };
+
+            Console.WriteLine("Прослуховування за жанрами й днями тижня");
+            Console.WriteLine();
+
+            int rows = genres.Length;
+            int cols = days.Length;
+
+            Console.Write("{0,-12}", "Жанр");
+            for (int col = 0; col < cols; col++)
+            {
+                Console.Write("{0,8}", days[col]);
+            }
+            Console.WriteLine("{0,10}", "Разом");
+
+            int lineWidth = 12 + 8 * cols + 10;
+            Console.WriteLine(new string('-', lineWidth));
+
+            for (int row = 0; row < rows; row++)
+            {
+                int rowSum = 0;
+                Console.Write("{0,-12}", genres[row]);
+
+                for (int col = 0; col < cols; col++)
+                {
+                    int value = (row * 7 + col * 3 + 5) % 19 + 3;
+                    Console.Write("{0,8}", value);
+                    rowSum += value;
+                }
+
+                Console.WriteLine("{0,10}", rowSum);
             }
         }
     }
