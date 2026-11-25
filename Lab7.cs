@@ -30,7 +30,7 @@ namespace MusicCollection
                         Pause();
                         break;
                     case "2":
-                        Console.WriteLine("Поки не зроблено.");
+                        ShowSizeTable();
                         Pause();
                         break;
                     case "3":
@@ -76,6 +76,25 @@ namespace MusicCollection
             Console.WriteLine();
             Console.WriteLine("Підсумкова величина: загальна тривалість колекції");
             Console.WriteLine("та топ-5 треків за прослуховуваннями.");
+        }
+
+        static void ShowSizeTable()
+        {
+            double start = 1.5;
+            double finish = 7.0;
+            double step = 0.5;
+
+            Console.WriteLine("Розмір MP3-файлу залежно від тривалості треку");
+            Console.WriteLine();
+            Console.WriteLine("{0,10}{1,14}{2,14}", "Хвилин", "128 кбіт/с", "320 кбіт/с");
+            Console.WriteLine(new string('-', 38));
+
+            for (double minutes = start; minutes <= finish + 1e-9; minutes += step)
+            {
+                double mb128 = minutes * 60 * 128 / 8 / 1024;
+                double mb320 = minutes * 60 * 320 / 8 / 1024;
+                Console.WriteLine("{0,10:F1}{1,14:F2}{2,14:F2}", minutes, mb128, mb320);
+            }
         }
     }
 }
