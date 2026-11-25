@@ -152,32 +152,37 @@ namespace MusicCollection
             }
         }
 
+        static string[] GetGenres()
+        {
+            return new string[] { "Рок", "Поп", "Джаз", "Класика", "Хіп-хоп", "Електроніка", "Фольк", "Блюз" };
+        }
+
+        static string[] GetDays()
+        {
+            return new string[] { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд" };
+        }
+
+        static int CalculateListens(int row, int col)
+        {
+            return (row * 7 + col * 3 + 5) % 19 + 3;
+        }
+
         static void ShowListeningTable()
         {
-            string[] genres = { "Рок", "Поп", "Джаз", "Класика", "Хіп-хоп", "Електроніка", "Фольк", "Блюз" };
-            string[] days = { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд" };
-
             Console.WriteLine("Прослуховування за жанрами й днями тижня");
             Console.WriteLine();
 
-            int rows;
-            int cols;
-
-            Console.Write("Скільки жанрів показати (1–" + genres.Length + "): ");
-            if (!int.TryParse(Console.ReadLine(), out rows) || rows <= 0 || rows > genres.Length)
-            {
-                Console.WriteLine("Помилка: потрібне ціле число від 1 до " + genres.Length + ".");
-                return;
-            }
-
-            Console.Write("Скільки днів показати (1–" + days.Length + "): ");
-            if (!int.TryParse(Console.ReadLine(), out cols) || cols <= 0 || cols > days.Length)
-            {
-                Console.WriteLine("Помилка: потрібне ціле число від 1 до " + days.Length + ".");
-                return;
-            }
+            int rows = ReadInt("Скільки жанрів показати (1–" + GetGenres().Length + "): ", 1, GetGenres().Length);
+            int cols = ReadInt("Скільки днів показати (1–" + GetDays().Length + "): ", 1, GetDays().Length);
 
             Console.WriteLine();
+            PrintListeningTable(rows, cols);
+        }
+
+        static void PrintListeningTable(int rows, int cols)
+        {
+            string[] genres = GetGenres();
+            string[] days = GetDays();
 
             Console.Write("{0,-12}", "Жанр");
             for (int col = 0; col < cols; col++)
@@ -199,7 +204,7 @@ namespace MusicCollection
 
                 for (int col = 0; col < cols; col++)
                 {
-                    int value = (row * 7 + col * 3 + 5) % 19 + 3;
+                    int value = CalculateListens(row, col);
                     Console.Write("{0,8}", value);
                     rowSum += value;
                     colSums[col] += value;
